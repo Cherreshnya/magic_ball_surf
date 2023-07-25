@@ -21,33 +21,36 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.indigo.shade900,
+      backgroundColor: Colors.black87,
       body: Center(
-        child: SizedBox(
-          height: 300,
-          width: 300,
-          child: Container(
-            child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStatePropertyAll<Color>(Colors.indigo.shade700),
-                ),
-                onPressed: () {
-                  FutureBuilder<dynamic>(
-                    future: answer,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Container(child: Text("${answer}"));
-                      } else if (snapshot.hasError) {
-                        return const Text('Error');
-                      }
-                      return const Center(child: CircularProgressIndicator());
-                    },
-                  );
-                },
-                child: null),
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/img.png"),
+            ),
           ),
+          height: 400,
+          width: 400,
         ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          FutureBuilder<dynamic>(
+            future: answer,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Text(
+                  "${answer}",
+                );
+              } else if (snapshot.hasError) {
+                return const Text('Error');
+              }
+              return const Center(child: CircularProgressIndicator());
+            },
+          );
+        },
+        child: null,
       ),
     );
   }

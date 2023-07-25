@@ -11,7 +11,7 @@ Future<http.Response> getData() async {
   return await http.get(Uri.parse(url));
 }
 
-void loadData() {
+loadData() {
   getData().then((response) {
     if (response.statusCode == 200) {
       var jsonAnswer = jsonDecode(response.body)['reading'];
