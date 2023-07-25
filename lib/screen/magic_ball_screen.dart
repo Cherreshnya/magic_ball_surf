@@ -10,7 +10,7 @@ class MagicBallScreen extends StatefulWidget {
 }
 
 class _MagicBallScreenState extends State<MagicBallScreen> {
-  late Future<dynamic> answer;
+ late Future<dynamic> answer;
 
   @override
   void initState() {
@@ -22,43 +22,42 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black87,
-      body: Center(
-        child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/img.png"),
+      body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        InkWell(
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/img.png"),
+              ),
             ),
+            height: 400,
+            width: 400,
           ),
-          height: 400,
-          width: 400,
+          onTap: () {
+            FutureBuilder<dynamic>(
+              future: answer,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Text(
+                    "${answer}",
+                  );
+                } else if (snapshot.hasError) {
+                  return const Text('Error');
+                }
+                return const Center(child: CircularProgressIndicator());
+              },
+            );
+          },
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          FutureBuilder<dynamic>(
-            future: answer,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Text(
-                  "${answer}",
-                );
-              } else if (snapshot.hasError) {
-                return const Text('Error');
-              }
-              return const Center(child: CircularProgressIndicator());
-            },
-          );
-        },
-        child: null,
-      ),
+        Text(
+          "Нажмите на шар",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+          ),
+          textAlign: TextAlign.center,
+        )
+      ]),
     );
   }
-
-// Scaffold _openAnswer() {
-//   return Scaffold(
-//       body:
-//
-//   );
-// }
 }
