@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 
 
-Future<http.Response> getData() async {
+Future<dynamic> getData() async {
   const url = 'https://eightballapi.com/api';
   return await http.get(Uri.parse(url));
 }

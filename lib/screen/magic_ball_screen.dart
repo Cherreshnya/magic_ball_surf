@@ -10,7 +10,7 @@ class MagicBallScreen extends StatefulWidget {
 }
 
 class _MagicBallScreenState extends State<MagicBallScreen> {
- late Future<dynamic> answer;
+  late Future<dynamic> answer;
 
   @override
   void initState() {
@@ -33,10 +33,49 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
             height: 400,
             width: 400,
           ),
-          onTap: () {answer =  getData();
-            setState(() {
-              Text("${answer}");
-          });
+          onTap: () {
+            Container(
+              child: FutureBuilder<String>(
+                future: answer, // a previously-obtained Future<String> or null
+                builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                  List<Widget> children;
+                  if (snapshot.hasData) {
+                    children = <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: Text(' ${snapshot.data}'),
+                      ),
+                    ];
+                  } else if (snapshot.hasError) {
+                    children = <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: Text('${snapshot.error}'),
+                      ),
+                    ];
+                  } else {
+                    children = const <Widget>[
+                      SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: CircularProgressIndicator(),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 16),
+                        child: Text('Awaiting result...'),
+                      ),
+                    ];
+                  }
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: children,
+                    ),
+                  );
+                },
+              ),
+            );
+
           },
         ),
         Text(
@@ -46,25 +85,9 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
             fontSize: 20,
           ),
           textAlign: TextAlign.center,
-        )
+        ),
+
       ]),
-    );
-  }
-  Container Answer() {
-    return Container(
-      child:  FutureBuilder<dynamic>(
-        future: answer,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Text(
-              "${answer}",
-            );
-          } else if (snapshot.hasError) {
-            return const Text('Error');
-          }
-          return const Center(child: CircularProgressIndicator());
-        },
-      ),
     );
   }
 }
