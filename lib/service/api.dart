@@ -1,19 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-
-
-// class ApiDataProvider {
-//   Future<String?> getData() async {
-//     var response = await http.get(
-//         Uri.encodeFull("https://eightballapi.com/api") as Uri,);
-//     if (response.statusCode == 200) {
-//       return response.toString();
-//     } else {
-//       throw Exception("Что то пошло не так");
-//     }
-//   }
-// }
 
 
 Future<http.Response> getData() async {
@@ -23,8 +13,9 @@ Future<http.Response> getData() async {
 
 void loadData() {
   getData().then((response) {
-    if(response.statusCode == 200) {
-      print(response.body);
+    if (response.statusCode == 200) {
+      var jsonAnswer = jsonDecode(response.body)['reading'];
+       print (jsonAnswer);
     } else {
       print(response.statusCode);
     }
