@@ -33,20 +33,10 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
             height: 400,
             width: 400,
           ),
-          onTap: () {
-            FutureBuilder<dynamic>(
-              future: answer,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Text(
-                    "${answer}",
-                  );
-                } else if (snapshot.hasError) {
-                  return const Text('Error');
-                }
-                return const Center(child: CircularProgressIndicator());
-              },
-            );
+          onTap: () {answer =  getData();
+            setState(() {
+              Text("${answer}");
+          });
           },
         ),
         Text(
@@ -58,6 +48,23 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
           textAlign: TextAlign.center,
         )
       ]),
+    );
+  }
+  Container Answer() {
+    return Container(
+      child:  FutureBuilder<dynamic>(
+        future: answer,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Text(
+              "${answer}",
+            );
+          } else if (snapshot.hasError) {
+            return const Text('Error');
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
+      ),
     );
   }
 }
