@@ -6,20 +6,26 @@ import 'package:http/http.dart' as http;
 
 
 
-Future<dynamic> getData() async {
+Future<String> getData() async {
   const url = 'https://eightballapi.com/api';
-  return await http.get(Uri.parse(url));
+  final response = await http.get(Uri.parse(url));
+  final bodyMap = jsonDecode(response.body);
+  return bodyMap["reading".toString()];
 }
 
-loadData() {
-  getData().then((response) {
-    if (response.statusCode == 200) {
-      var jsonAnswer = jsonDecode(response.body)['reading'];
-       print (jsonAnswer);
-    } else {
-      print(response.statusCode);
-    }
-  }).catchError((error) {
-    debugPrint(error.toString());
-  });
-}
+//   return await http.get(Uri.parse(url));
+//
+// }
+// loadData() {
+//   getData().then((response) {
+//     if (response.statusCode == 200) {
+//       var jsonAnswer = jsonDecode(response.body)['reading'];
+//        print (jsonAnswer);
+//     } else {
+//       print(response.statusCode);
+//     }
+//   }).catchError((error) {
+//     debugPrint(error.toString());
+//   });
+//
+// }
