@@ -10,7 +10,7 @@ Future<String> getData() async {
   const url = 'https://eightballapi.com/api';
   final response = await http.get(Uri.parse(url));
   final bodyMap = jsonDecode(response.body);
-  return bodyMap["reading".toString()];
+  return bodyMap["reading"];
 }
 
 //   return await http.get(Uri.parse(url));
